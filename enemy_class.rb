@@ -1,11 +1,11 @@
 class GameEnemy
-	attr_reader :name, :attack, :magic, :defense, :magic_defense, :agility, :accuracy
+	attr_reader :name, :power, :magic, :defense, :magic_defense, :agility, :accuracy
 	attr_accessor :health
 
 	def initialize(stats)
 		@name = stats[:name]
 		@health = stats[:health]
-		@attack = stats[:attack]
+		@power = stats[:attack]
 		@magic = stats[:magic]
 		@defense = stats[:defense]
 		@magic_defense = stats[:magic_defense]
@@ -26,7 +26,7 @@ class GameEnemy
 		end
 	end
 
-	def magic(player)
+	def magic_attack(player)
 		cast = @magic - player.magic_defense
 		if cast <= 0
 			cast = 0

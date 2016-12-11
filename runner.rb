@@ -181,7 +181,7 @@ until player.health <= 0 || enemy.health <= 0
 		player.attack(die, enemy)
 	elsif selection == "magic attack"
 		puts "#{player.name} attacks with magic!"
-		player.magic(enemy)
+		player.magic_attack(enemy)
 	end
 	sleep(2)
 	enemy_selection = ["attack", "magic attack"].sample
@@ -190,7 +190,7 @@ until player.health <= 0 || enemy.health <= 0
 		enemy.attack(die, player)
 	elsif enemy_selection == "magic attack"
 		puts "#{enemy.name} attacks with magic!"
-		enemy.magic(player)
+		enemy.magic_attack(player)
 	end
 	sleep(2)
 end
