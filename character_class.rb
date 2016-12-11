@@ -1,8 +1,9 @@
 class GameCharacter
-	attr_reader :attack, :magic, :defense, :agility, :accuracy
+	attr_reader :name, :attack, :magic, :defense, :agility, :accuracy
 	attr_accessor :health
 
 	def initialize(stats)
+		@name = stats[:name]
 		@health = stats[:health]
 		@attack = stats[:attack]
 		@magic = stats[:magic]
