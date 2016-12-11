@@ -1,5 +1,5 @@
 class GameEnemy
-	attr_reader :name, :attack, :magic, :defense, :agility, :accuracy
+	attr_reader :name, :attack, :magic, :defense, :magic_defense, :agility, :accuracy
 	attr_accessor :health
 
 	def initialize(stats)
@@ -14,17 +14,23 @@ class GameEnemy
 	end
 
 
-	def attack
+	def attack(die, player)
 		attempt = die.roll + @accuracy - player.agility
 		strike = 0
 		if attempt >= 6
 			strike = @attack - player.defense
+			if strike <= 0
+				strike = 0
+			end
 			player.health -= strike
 		end
 	end
 
-	def magic
-		cast = @magic - @player.magic_defense
+	def magic(player)
+		cast = @magic - player.magic_defense
+		if cast <= 0
+			cast = 0
+		end
 		player.health -= cast
 	end
 

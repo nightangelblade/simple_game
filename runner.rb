@@ -150,7 +150,6 @@ sleep(1)
 reset_screen
 puts "Select your difficulty (Easy, Medium, Hard)"
 sleep(1)
-reset_screen
 difficulty = gets.chomp.downcase
 if difficulty == "easy"
 	difficulty = 0
@@ -159,7 +158,7 @@ elsif difficulty == "medium"
 elsif difficulty == "hard"
 	difficulty = 2
 end
-enemy = GameEnemy.new(enemies[difficulty][rand(0...1)])
+enemy = GameEnemy.new(enemies[difficulty][[0, 1].sample])
 reset_screen
 puts "Your story now begins..."
 sleep(2)
@@ -168,13 +167,35 @@ sleep(2)
 puts "Yet after two long years, daemons still roam the land, attacking at night upon unsuspecting victims."
 sleep(2)
 puts "You are one of many under the organization called the Hunters, who protect travelers in their journeys across the land."
-
-
+sleep(3)
+reset_screen
 
 # UI for battle
-
-actions(player, enemy)
-# if actions(character) == "attack"
-# 	character.attack
-# elsif actions(character) == "magic attack"
-# 	character.magic
+puts "Encountered Enemy #{enemy.name}!"
+sleep(3)
+until player.health <= 0 || enemy.health <= 0
+	reset_screen
+	selection = actions(player, enemy)
+	if selection == "attack"
+		puts "#{player.name} attacks with weapon!"
+		player.attack(die, enemy)
+	elsif selection == "magic attack"
+		puts "#{player.name} attacks with magic!"
+		player.magic(enemy)
+	end
+	sleep(2)
+	enemy_selection = ["attack", "magic attack"].sample
+	if enemy_selection == "attack"
+		puts "#{enemy.name} attacks with weapon!"
+		enemy.attack(die, player)
+	elsif enemy_selection == "magic attack"
+		puts "#{enemy.name} attacks with magic!"
+		enemy.magic(player)
+	end
+	sleep(2)
+end
+if player.health < enemy.health
+	puts "Defeated! Game Over"
+elsif player.health > enemy.health
+	puts "Victory! Traveler safely escorted."
+end
